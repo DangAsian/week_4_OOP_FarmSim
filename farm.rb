@@ -16,12 +16,88 @@ class Farms
   end
 
   def harvest
-    @farm_fields.each do |field|
-      field.produce == true
-      @total_harvest += field.bounty
-      end
+  @farm_fields.each do |field|
 
-      return @total_harvest
+    @total_harvest += field.produce
+  end
+
+  return @total_harvest
+  end
+
+  def status
+    puts "The farm has #{self.total_harvest} harvested food so far"
+  end
+
+  def main_menu
+    while true
+    list_items
+    user_input = gets.chomp.to_i
+    call_option(user_input)
+  end
+  end
+
+
+  def list_items
+    puts "(1) field -> add a new field"
+    puts "(2) harvest -> harvests crops and adds to total harvest"
+    puts "(3) status -> displays some information about the farm"
+    puts "(4) relax -> provides lovely descriptions of your fields"
+    puts "(5) exit -> exists the progadd a new fieldram"
+  end
+
+  def call_option(user_input)
+    case user_input
+    when 1 then add_to_field
+    when 2 then harvest_everything
+    when 3 then farm_status
+    when 4 then enjoy_the_beauty
+    when 5 then exit
+    end
+  end
+
+  #First Case
+
+  def add_to_field
+    puts "What kind of field is it: corn, potato, or pumpkin?"
+    crop = gets.chomp
+    puts "How large is the field in hectare?"
+    field = gets.chomp.to_i
+    puts "Added a #{crop} field of #{field}"
+    new_field = Fields.new(crop, field)
+    self.add(new_field)
+  end
+
+  #Second case
+  def harvest_everything
+    @farm_fields.each do |field|
+
+      puts "Harvesting #{field.produce} food from #{field.hectare} #{field.food}"
+    end
+    puts "The farm has #{harvest} food so far"
+  end
+
+  #Third case
+  def farm_status
+    @farm_fields.each do |field|
+      puts "#{field.food} field is #{field.hectare} hectares."
+    end
+  end
+
+  #Fourth case
+  def enjoy_the_beauty()
+    @farm_fields.each do |field|
+      if field.food == "corn"
+        puts "#{field.hectare} hectares of beautiful #{field.food} fields"
+      elsif field.food == "potato"
+        puts "#{field.hectare} hectares of beautiful #{field.food} fields >:D potato potato potato"
+      elsif field.food == "pumpkin"
+        puts "Wow this #{field.food} is beautiful and I cant wait for #{field.produce} that will come out during the harvest >:D"
       end
+    end
+
+end
+
+
+
 
 end
